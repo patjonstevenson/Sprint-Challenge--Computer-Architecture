@@ -230,7 +230,7 @@ class DispatchTable:
         pc = self.cpu.get_pc()
         reg_a = self.cpu.ram_read(pc + 1)
         operand_a = self.cpu.reg_read(reg_a)
-        self.cpu.reg_write((1 << 8) - 1 - operand_a, reg_a)
+        self.cpu.reg_write(0b11111111 ^ operand_a, reg_a)
         self.cpu.increment_pc(2)
     
 
