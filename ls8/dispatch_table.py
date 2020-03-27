@@ -98,6 +98,22 @@ class DispatchTable:
         elif diff < 0:
             self.cpu.increment_pc(abs(diff))
 
+    # TODO
+    def cmp(self):
+        pass
+
+    # TODO
+    def jmp(self):
+        pass
+
+    # TODO
+    def jeq(self):
+        pass
+    
+    # TODO
+    def jne(self):
+        pass
+
     # ALU Operations
     def add(self):
         pc = self.cpu.get_pc()

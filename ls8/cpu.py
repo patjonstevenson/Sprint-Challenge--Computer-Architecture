@@ -13,6 +13,10 @@ class CPU:
         self.pc = 0
         self.program_file = None
         self.dispatch_table = DispatchTable(self)
+        self.ir = 0
+        self.mar = 0
+        self.mdr = 0
+        self.fl = 0b00000000
 
     def get_pc(self):
         return self.pc
