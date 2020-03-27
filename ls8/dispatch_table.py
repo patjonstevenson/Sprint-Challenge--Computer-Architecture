@@ -11,6 +11,14 @@ class DispatchTable:
             0b10100001: self.sub,
             0b10100010: self.mul,
             0b10100011: self.div,
+            0b10101000: self.AND,
+            0b10101010: self.OR,
+            0b10101011: self.XOR,
+            0b01101001: self.NOT,
+            0b10101100: self.SHL,
+            0b10101101: self.SHR,
+            0b10100100: self.MOD,
+
 
             # Other
             0b10000010: self.ldi,
@@ -180,3 +188,81 @@ class DispatchTable:
         operand_b = self.cpu.reg_read(reg_b)
         self.cpu.reg_write(operand_a/operand_b, reg_a)
         self.cpu.increment_pc(3)
+
+
+    # TODO
+    def AND(self):
+        pc = self.cpu.get_pc()
+        reg_a = self.cpu.ram_read(pc + 1)
+        reg_b = self.cpu.ram_read(pc + 2)
+        operand_a = self.cpu.reg_read(reg_a)
+        operand_b = self.cpu.reg_read(reg_b)
+        # print(f"operand_a: {operand_a}")
+        # print(f"operand_b: {operand_b}")
+        # print(f"reg_a: {reg_a}")
+        # print(f"operand_a & operand_b: {operand_a & operand_b}")
+        self.cpu.reg_write(operand_a & operand_b, reg_a)
+        self.cpu.increment_pc(3)
+    
+    # TODO
+    def OR(self):
+        pc = self.cpu.get_pc()
+        reg_a = self.cpu.ram_read(pc + 1)
+        reg_b = self.cpu.ram_read(pc + 2)
+        operand_a = self.cpu.reg_read(reg_a)
+        operand_b = self.cpu.reg_read(reg_b)
+        self.cpu.reg_write(operand_a | operand_b, reg_a)
+        self.cpu.increment_pc(3)
+
+    # TODO
+    def XOR(self):
+        pc = self.cpu.get_pc()
+        reg_a = self.cpu.ram_read(pc + 1)
+        reg_b = self.cpu.ram_read(pc + 2)
+        operand_a = self.cpu.reg_read(reg_a)
+        operand_b = self.cpu.reg_read(reg_b)
+        self.cpu.reg_write(operand_a ^ operand_b, reg_a)
+        self.cpu.increment_pc(3)
+    
+
+    # TODO
+    def NOT(self):
+        pc = self.cpu.get_pc()
+        reg_a = self.cpu.ram_read(pc + 1)
+        operand_a = self.cpu.reg_read(reg_a)
+        self.cpu.reg_write((1 << 8) - 1 - operand_a, reg_a)
+        self.cpu.increment_pc(2)
+    
+
+    # TODO
+    def SHL(self):
+        pc = self.cpu.get_pc()
+        reg_a = self.cpu.ram_read(pc + 1)
+        reg_b = self.cpu.ram_read(pc + 2)
+        operand_a = self.cpu.reg_read(reg_a)
+        operand_b = self.cpu.reg_read(reg_b)
+        self.cpu.reg_write(operand_a << operand_b, reg_a)
+        self.cpu.increment_pc(3)
+    
+
+    # TODO
+    def SHR(self):
+        pc = self.cpu.get_pc()
+        reg_a = self.cpu.ram_read(pc + 1)
+        reg_b = self.cpu.ram_read(pc + 2)
+        operand_a = self.cpu.reg_read(reg_a)
+        operand_b = self.cpu.reg_read(reg_b)
+        self.cpu.reg_write(operand_a >> operand_b, reg_a)
+        self.cpu.increment_pc(3)
+    
+    # TODO
+    def MOD(self):
+        pc = self.cpu.get_pc()
+        reg_a = self.cpu.ram_read(pc + 1)
+        reg_b = self.cpu.ram_read(pc + 2)
+        operand_a = self.cpu.reg_read(reg_a)
+        operand_b = self.cpu.reg_read(reg_b)
+        self.cpu.reg_write(operand_a % operand_b, reg_a)
+        self.cpu.increment_pc(3)
+    
+
