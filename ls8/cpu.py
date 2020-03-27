@@ -16,7 +16,18 @@ class CPU:
         self.ir = 0
         self.mar = 0
         self.mdr = 0
-        self.fl = 0b00000000
+        self.fl = 0b00000000 # 00000LGE
+
+    def set_fl(self, op):
+        if op == 'E':
+            self.fl = 0b00000001
+        elif op == 'G':
+            self.fl = 0b00000010
+        elif op == 'L':
+            self.fl = 0b00000100
+        else:
+            raise ValueError(f'{op} is not a valid input for set_fl.\n"E", "G", or "L" are the only valid arguments.')
+        
 
     def get_pc(self):
         return self.pc

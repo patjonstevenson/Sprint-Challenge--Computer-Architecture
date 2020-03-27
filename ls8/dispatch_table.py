@@ -20,7 +20,12 @@ class DispatchTable:
             0b01000101: self.push,
             0b01000110: self.pop,
             0b01010000: self.call,
-            0b00010001: self.ret
+            0b00010001: self.ret,
+
+            0b10100111: self.cmp,
+            0b01010101: self.jeq,
+            0b01010110: self.jne,
+            0b01010100: self.jmp
         }
 
     def execute(self, cmd):
@@ -100,7 +105,18 @@ class DispatchTable:
 
     # TODO
     def cmp(self):
-        pass
+        pc = self.cpu.get_pc()
+        reg_a = self.cpu.ram_read(pc + 1)
+        reg_b = self.cpu.ram_read(pc + 2)
+        operand_a = self.reg_read(reg_a)
+        operand_b = self.reg_read(reg_b)
+
+        if operand_a == operand_b:
+            self.cpu.set_fl('E')
+        elif operand_a > operand_b:
+            self.cpu.set_fl('G')
+        elif operand_a < operand_b:
+            self.cpu.set_fl('L')
 
     # TODO
     def jmp(self):
