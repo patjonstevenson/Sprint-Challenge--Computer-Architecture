@@ -35,6 +35,8 @@ class CPU:
             return 'G'
         elif self.fl == 0b00000100:
             return 'L'
+        elif self.fl == 0b00000000:
+            return 'N'
 
     def get_pc(self):
         return self.pc

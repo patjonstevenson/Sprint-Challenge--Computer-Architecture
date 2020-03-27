@@ -103,13 +103,12 @@ class DispatchTable:
         elif diff < 0:
             self.cpu.increment_pc(abs(diff))
 
-    # TODO
     def cmp(self):
         pc = self.cpu.get_pc()
         reg_a = self.cpu.ram_read(pc + 1)
         reg_b = self.cpu.ram_read(pc + 2)
-        operand_a = self.reg_read(reg_a)
-        operand_b = self.reg_read(reg_b)
+        operand_a = self.cpu.reg_read(reg_a)
+        operand_b = self.cpu.reg_read(reg_b)
 
         if operand_a == operand_b:
             self.cpu.set_fl('E')
@@ -120,29 +119,30 @@ class DispatchTable:
         
         self.cpu.increment_pc(3)
 
-    # TODO
     def jmp(self):
         pc = self.cpu.get_pc()
         reg = self.cpu.ram_read(pc + 1)
         addr = self.cpu.reg_read(reg)
-
+        
         diff = pc - addr
         if diff > 0:
             self.cpu.decrement_pc(diff)
         elif diff < 0:
             self.cpu.increment_pc(abs(diff))
 
-    # TODO
     def jeq(self):
         fl = self.cpu.get_fl()
         if fl == 'E':
             self.jmp()
-    
-    # TODO
+        else:
+            self.cpu.increment_pc(2)
+
     def jne(self):
         fl = self.cpu.get_fl()
         if fl != 'E':
             self.jmp()
+        else:
+            self.cpu.increment_pc(2)
 
     # ALU Operations
     def add(self):
