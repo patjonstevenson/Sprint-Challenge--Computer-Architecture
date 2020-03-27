@@ -117,18 +117,32 @@ class DispatchTable:
             self.cpu.set_fl('G')
         elif operand_a < operand_b:
             self.cpu.set_fl('L')
+        
+        self.cpu.increment_pc(3)
 
     # TODO
     def jmp(self):
-        pass
+        pc = self.cpu.get_pc()
+        reg = self.cpu.ram_read(pc + 1)
+        addr = self.cpu.reg_read(reg)
+
+        diff = pc - addr
+        if diff > 0:
+            self.cpu.decrement_pc(diff)
+        elif diff < 0:
+            self.cpu.increment_pc(abs(diff))
 
     # TODO
     def jeq(self):
-        pass
+        fl = self.cpu.get_fl()
+        if fl == 'E':
+            self.jmp()
     
     # TODO
     def jne(self):
-        pass
+        fl = self.cpu.get_fl()
+        if fl != 'E':
+            self.jmp()
 
     # ALU Operations
     def add(self):
